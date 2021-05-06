@@ -1,0 +1,16 @@
+<html>
+<head>
+    {% if title %}
+    <title>{{ title }} - DB-Tools</title>
+    {% else %}
+    <title>Welcome to DB-Tools</title>
+    {% endif %}
+    {% include 'head.html' %}
+</head>
+<body>
+<div>Seidenader: <a href="/index">Home</a> - <a href="/config">Config</a> - <a href="/postgres">View Postgres</a> - <a
+        href="/sqlite">View SQLite</a></div>
+<hr>
+{% block content %}{% endblock %}
+</body>
+</html>

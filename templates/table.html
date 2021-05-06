@@ -1,0 +1,96 @@
+{% macro table_with_buttons(id="databasetable", column_names=[], table=[] )%}
+<script>
+    $(document).ready(function () {
+        var oTable = $("#{{id}}").DataTable({
+            "dom": '<"Buttons"B>lrtip',
+            colReorder: false,
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        });
+        $('#{{id}} tbody').on('click', 'tr', function () {
+            $(this).toggleClass('selected');
+        });
+        function getSelected() {
+            var selected = [];
+            $('#{{id}} tbody tr.selected').each(function () {
+                var pos = oTable.row(this).index();
+                var row = oTable.row(pos).data();
+                var id_name = row[5];
+                selected.push(id_name);
+            });
+            return selected;
+        }
+        $("#btnName{{id}}").on("click", function () {
+            var oAll = getSelected();
+            var conf = confirm("Do you want to delete the folowing Names? \n" + oAll);
+            if (conf == false) {
+                alert("No Data has been Deleted")
+            }
+            if (conf == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "delete_batch_name_array",
+                    data: { 'data': JSON.stringify(oAll) }
+                });
+                location.reload();
+            }
+        });
+        $("#btnID{{id}}").on("click", function () {
+            var oAll = getSelected();
+            var conf = confirm("Do you want to delete the folowing IDs? \n" + oAll);
+            if (conf == false) {
+                alert("No Data has been Deleted")
+            }
+            if (conf == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "delete_batch_id_array",
+                    data: { 'data': JSON.stringify(oAll) }
+                });
+                location.reload();
+            }
+        });
+        $("#btnbetweenids{{id}}").on("click", function () {
+            var oAll = getSelected();
+            if (oAll.length > 1) {
+                var conf = confirm("Do you want to delete the batches between the following IDs? \n" + oAll);
+                if (conf == false) {
+                    alert("No Data has been Deleted")
+                }
+                if (conf == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "delete_between_ids",
+                        data: { 'data': JSON.stringify(oAll) }
+                    });
+                    location.reload();
+                }
+            }
+            else {
+                alert("Please select 2 or more Values")
+            }
+        });
+    });
+
+</script>
+<table class="display" id="{{id}}">
+    <thead>
+        <tr>
+            {% for name in column_names %}
+            <th> {{ name }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for table_object in table %}
+        <tr>
+            {% for name in column_names %}
+            <td> {{ table_object[name] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% endmacro %}

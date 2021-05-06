@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin: auto;
+  width: 90%;
+  border: 2px solid red;
+  overflow-x:auto;
+  overflow-y:auto;">
+    <form>
+        <table style="margin-left: auto; margin-right: auto;">
+            <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Standard Values</th>
+                <th>User Override</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Servername</td>
+                <td>{{ standard_parameter[0] }}</td>
+                <td><input name="postgres_url" placeholder="{{ user_parameter[0] }}"></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>{{ standard_parameter[1] }}</td>
+                <td><input name="postgres_user" placeholder="{{ user_parameter[1] }}"></td>
+            </tr>
+            <tr>
+                <td>Pasword</td>
+                <td>*****</td>
+                <td><input name="postgres_pw" placeholder="password" type="password"></td>
+            </tr>
+            <tr>
+                <td>DB-Name</td>
+                <td>{{ standard_parameter[2] }}</td>
+                <td><input name="postgres_db" placeholder="{{ user_parameter[2] }}"></td>
+            </tr>
+            <tr>
+                <td>Limit Table length</td>
+                <td>{{ standard_parameter[3] }}</td>
+                <td><input name="limit_table_length" placeholder="{{ user_parameter[3] }}" type="number"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button formaction="saveconfigvalues" formmethod="POST" type="submit">Save my values</button>
+                </td>
+                <td>
+                    <button formaction="resetconfigvalues" formmethod="POST" type="submit">Reset my values</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+{% endblock %}

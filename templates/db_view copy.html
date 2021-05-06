@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% import 'table.html' as tables%}
+{% block content %}
+{% for single_table in alltables %}
+    {{ tables.table_with_buttons(id=single_table.table_name, column_names= single_table.column_names , table=single_table.table ) }}
+{%end for %}
+{% endblock %}

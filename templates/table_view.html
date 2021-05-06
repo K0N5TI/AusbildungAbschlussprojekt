@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% import 'table.html' as tables%}
+{% block content %}
+{{ tables.table_with_buttons(id=table_name, column_names= column_names , table=table ) }}
+{% endblock %}
