@@ -35,17 +35,16 @@ def alltables():
     alltables = []
     table_names = database.get_table_names()
     for table in table_names:
-        table_content = json.dumps([dict(r) for r in database.get_table(table)], default=alchemyencoder)
         alltables.append({
             "table_name":str(table),
             "column_names":list(database.get_table_columns(table)),
-            "table": { "data": table_content}
+            "table": database.get_table(table)
         })
     return render_template("db_view.html", alltables=alltables)
 
-@app.route('/select')
+@app.route('/filter')
 def page_select():
-    return 'Page select'
+    return 'Page filter'
 
 
 @app.route('/view')
