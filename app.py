@@ -18,12 +18,8 @@ def alchemyencoder(obj):
 
 @app.route('/')
 def hello_world():
-    table_name = "batch"
-    with open("parameters.json") as file:
-        data = json.load(file)
-        database = PostgersqlDBManagement(username=data["postgres_user"], password=data["postgres_pw"],
-                                          url=data["postgres_url"], dbname=data["postgres_db"])
-    return render_template("table_view.html", table_name=table_name, column_names=database.get_table_columns(table_name), table=database.get_table(table_name))
+    
+    return render_template("index.html",)
 
 
 @app.route('/alltables')
@@ -44,7 +40,7 @@ def alltables():
 
 @app.route('/filter')
 def page_select():
-    return 'Page filter'
+    return render_template("filter.html")
 
 
 @app.route('/view')

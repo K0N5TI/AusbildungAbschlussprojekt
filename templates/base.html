@@ -1,4 +1,5 @@
 <html>
+
 <head>
     {% if title %}
     <title>{{ title }} - DB-Tools</title>
@@ -7,10 +8,14 @@
     {% endif %}
     {% include 'head.html' %}
 </head>
+
 <body>
-<div>Seidenader: <a href="/index">Home</a> - <a href="/config">Config</a> - <a href="/postgres">View Postgres</a> - <a
-        href="/sqlite">View SQLite</a></div>
-<hr>
-{% block content %}{% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static',filename='Resources/Koerber_Logo_RGB_Black.svg')}}" width="100" height="100" alt="">
+        </a>
+      </nav>
+    {% block content %}{% endblock %}
 </body>
+
 </html>
