@@ -3,7 +3,8 @@
     $(document).ready(function () {
         var oTable = $("#{{id}}").DataTable({
             "dom": '<"Buttons"B>lrtip',
-            colReorder: false,
+            colReorder: true,
+            responsive: true,
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
@@ -70,6 +71,11 @@
             else {
                 alert("Please select 2 or more Values")
             }
+        });
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+                .fixedColumns().relayout();
         });
     });
 

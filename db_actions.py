@@ -7,7 +7,7 @@ class DBManagement:
         return self.metadata.tables.keys()
 
     def get_table_columns(self, table_name):
-        return self.metadata.tables[table_name].columns
+        return self.engine.execute(f"SELECT * FROM {table_name} LIMIT 0").keys()
 
     def get_table(self, table_name):
         return self.engine.execute(f"SELECT * FROM {table_name}")
