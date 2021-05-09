@@ -8,6 +8,7 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
     SQLALCHEMY_DATABASE_URI = 'postgres://postgres:merlin#0@192.168.178.99:5432/database'
+    TEMPLATES_AUTO_RELOAD = True
 
 
 class ProductionConfig(Config):

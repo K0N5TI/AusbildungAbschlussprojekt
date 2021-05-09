@@ -1,4 +1,71 @@
 {% extends "base.html" %}
 {% block content %}
+<script>
+    $('#sandbox-container .input-daterange').datepicker({
+});
+</script>
+<h1 style="color:blue;">
+    Select data
+</h1>
+<form>
+    <div class="form-group row">
+        <h5 for="BatchNumber" class="col-sm-2 col-form-h5">Batch Number</h5>
+        <div class="col-sm-10">
+            <select id="BatchNumber" class="form-control">
+                <option selected>Choose...</option>
+                <option>...</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <h5 for="Date" class="col-sm-2 col-form-h5">Date</h5>
+        <div class="col-sm-5">
+            <label for="fromdate">From</label>
+            <input type="date" id="fromdate"class="form-control" data-date-format="mm/dd/yyyy">
+        </div>
+        <div class="col-sm-5">
+            <label for="todate">To</label>
+            <input type="date" id="todate"class="form-control" data-date-format="mm/dd/yyyy">
+        </div>
+    </div>
 
+    <div class="form-group row">
+        <h5 for="Date" class="col-sm-2 col-form-h5">Time</h5>
+        <div class="col-sm-5">
+            <label for="fromdate">From</label>
+            <input type="time" id="fromtime"class="form-control" data-date-format="mm/dd/yyyy">
+        </div>
+        <div class="col-sm-5">
+            <label for="todate">To</label>
+            <input type="time" id="totime"class="form-control" data-date-format="mm/dd/yyyy">
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <h5 for="RecipeName" class="col-sm-2 col-form-h5">Recipe Name</h5>
+        <div class="col-sm-10">
+            <select id="RecipeName" class="form-control">
+                <option selected>Choose...</option>
+                <option>...</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <h5 for="CameraStation" class="col-sm-2 col-form-h5">Camera Station</h5>
+        <div class="col-sm-10">
+            <select id="CameraStation" class="form-control">
+                <option selected>Choose...</option>
+                <option>...</option>
+            </select>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</form>
 {% endblock %}
