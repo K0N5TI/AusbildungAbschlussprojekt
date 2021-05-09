@@ -39,7 +39,7 @@ def alltables():
     return render_template("db_view.html", alltables=alltables)
 
 @app.route('/filter')
-def page_select():
+def page_filter():
     return render_template("filter.html")
 
 
