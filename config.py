@@ -7,7 +7,7 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
-    SQLALCHEMY_DATABASE_URI = 'postgres://postgres:merlin#0@192.168.178.99:5432/database'
+    SQLALCHEMY_DATABASE_URI = 'postgres://user:password@address:5432/database'
     TEMPLATES_AUTO_RELOAD = True
 
 
