@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from db_actions import PostgersqlDBManagement
@@ -38,14 +38,23 @@ def alltables():
         })
     return render_template("db_view.html", alltables=alltables)
 
-@app.route('/filter')
+@app.route('/filter', methods=["GET", "POST"])
 def page_filter():
+    if request.method == "POST":
+        req = request.form.to_dict()
+        return redirect(url_for("page_view", parapeters=req), code=307)
     return render_template("filter.html")
 
 
-@app.route('/view')
+@app.route('/view',methods=["GET", "POST"])
 def page_view():
-    return 'Page view'
+    if request.method == "GET":
+        return redirect(url_for("alltables"))
+    if request.method == "POST":
+        #TODO Gefilterte Auswahl ausgeben statt alle Tabellen
+        print(request.method)
+        print(request.args)
+    return redirect(url_for("alltables"))
 
 
 @app.route('/process')
@@ -54,4 +63,4 @@ def page_process():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=80)

@@ -3,54 +3,40 @@
 <h1 style="color:blue;">
     Select data
 </h1>
-<form action="{{url_for('page_filter')}}">
+<form action="{{url_for('page_filter')}}" method="POST">
     <div class="form-group row">
-        <label for="BatchNumber" class="col-sm-2 col-form-label h4">Batch Number</label>
+        <label for="batch_number" class="col-sm-2 col-form-label h4">Batch Number</label>
         <div class="col-sm-10">
-            <select id="BatchNumber" class="form-control">
+            <select id="batch_number" name="batch_number" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
             </select>
         </div>
     </div>
     <div class="form-group row">
-        <label for="Date" class="col-sm-2 col-form-label h4">Date</label>
+        <label for="Date" class="col-sm-2 col-form-label h4">Date and Time</label>
         <div class="col-sm-5">
-            <label for="fromdate">From</label>
-            <input type="date" id="fromdate" class="form-control" data-date-format="mm/dd/yyyy">
+            <label for="from_datetime">From</label>
+            <input type="datetime-local" id="from_datetime" name="from_datetime" class="form-control" data-date-format="mm/dd/yyyy">
         </div>
         <div class="col-sm-5">
-            <label for="todate">To</label>
-            <input type="date" id="todate" class="form-control" data-date-format="mm/dd/yyyy">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="Date" class="col-sm-2 col-form-label h4">Time</label>
-        <div class="col-sm-5">
-            <label for="fromdate">From</label>
-            <input type="time" id="fromtime" class="form-control" data-date-format="mm/dd/yyyy">
-        </div>
-        <div class="col-sm-5">
-            <label for="todate">To</label>
-            <input type="time" id="totime" class="form-control" data-date-format="mm/dd/yyyy">
+            <label for="to_datetime">To</label>
+            <input type="datetime-local" id="to_datetime" name="to_datetime" class="form-control" data-date-format="mm/dd/yyyy">
         </div>
     </div>
-
-
     <div class="form-group row">
-        <label for="RecipeName" class="col-sm-2 col-form-label h4">Recipe Name</label>
+        <label for="recipe_name" class="col-sm-2 col-form-label h4">Recipe Name</label>
         <div class="col-sm-10">
-            <select id="RecipeName" class="form-control">
+            <select id="recipe_name" name="recipe_name" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
             </select>
         </div>
     </div>
     <div class="form-group row">
-        <label for="CameraStation" class="col-sm-2 col-form-label h4">Camera Station</label>
+        <label for="camera_station" class="col-sm-2 col-form-label h4">Camera Station</label>
         <div class="col-sm-10">
-            <select id="CameraStation" class="form-control">
+            <select id="camera_station" name="camera_station" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
             </select>
@@ -61,16 +47,16 @@
         <label class="col-sm-2 col-form-label h4">Inspection checkbox</label>
         <div class="col-sm-5">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="DefectImages">
-            <label class="form-check-label" for="DefectImages">
+            <input class="form-check-input" type="checkbox" id="defect_images" name="defect_images">
+            <label class="form-check-label" for="defect_images">
               Defect images
             </label>
           </div>
         </div>
         <div class="col-sm-5">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="GoodImages">
-              <label class="form-check-label" for="GoodImages">
+              <input class="form-check-input" type="checkbox" id="good_images" name="good_images">
+              <label class="form-check-label" for="good_images">
                 Good Images
               </label>
             </div>
@@ -84,7 +70,7 @@
     <div style="float: right">
         <input class="btn btn-secondary mb-2" value="Load template">
         <input class="btn btn-secondary mb-2" value="Save as template">
-        <input class="btn btn-secondary mb-2" value="Reset">
+        <input type="reset" class="btn btn-secondary mb-2" value="Reset">
         <input type="submit" class="btn btn-primary mb-2" value="Select data">
     </div>
 
