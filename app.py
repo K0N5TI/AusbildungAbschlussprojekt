@@ -2,19 +2,15 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from db_actions import PostgersqlDBManagement
-import db_actions
+from table import table_interface
 import json
 import ast
+
 app = Flask(__name__)
 app.config.from_object(Config())
 db = SQLAlchemy(app)
 
-def alchemyencoder(obj):
-    """JSON encoder function for SQLAlchemy special classes."""
-    if isinstance(obj, datetime.date):
-        return obj.isoformat()
-    elif isinstance(obj, decimal.Decimal):
-        return float(obj)
+app.register_blueprint(table_interface)
 
 @app.route('/')
 def hello_world():
