@@ -13,7 +13,6 @@ def get_db_instance():
                                           url=data["postgres_url"], dbname=data["postgres_db"])
     return database
 
-
 @table_interface.route("/", methods=["GET"])
 def get_table_names():
     database = get_db_instance()

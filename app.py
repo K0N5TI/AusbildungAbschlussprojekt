@@ -11,7 +11,7 @@ app.config.from_object(Config())
 db = SQLAlchemy(app)
 
 app.register_blueprint(table.table_interface)
-
+app.jinja_env.globals.update(get_table_columns=table.get_table_columns)
 @app.route('/')
 def hello_world():
     
