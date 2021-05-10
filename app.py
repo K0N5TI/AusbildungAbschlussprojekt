@@ -26,13 +26,11 @@ def alltables():
                                           url=data["postgres_url"], dbname=data["postgres_db"])
     alltables = []
     table_names = database.get_table_names()
-    for table in table_names:
+    for i in table_names:
         alltables.append({
-            "table_name":str(table),
-            "column_names":list(database.get_table_columns(table)),
-            "table": database.get_table(table)
+            "table_name":str(i)
         })
-    return render_template("db_view.html", alltables=alltables)
+    return render_template("db_view.html", alltables=alltables, table_columns=table.get_table_columns)
 
 @app.route('/filter', methods=["GET", "POST"])
 def page_filter():

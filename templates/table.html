@@ -121,12 +121,10 @@
 
 {% macro ajax_table(table_name="table_name", table_columns=table_columns)%}
 <script>
-    var columns = JSON.parse("[" + '{% for column_name in table_columns(table_name).get_json()["columns"] %}{ "data": "{{column_name}}" },{% endfor %}'.replace(/,\s*$/, "") + "]");
-    console.log(columns)
     $(document).ready(function () {
         var oTable = $("#{{table_name}}").DataTable({
             "ajax": "{{url_for('table_interface.get_table_rows', table_name=table_name)}}",
-            "columns": columns,
+            "columns": JSON.parse("[" + '{% for column_name in table_columns(table_name).get_json()["columns"] %}{ "data": "{{column_name}}" },{% endfor %}'.replace(/,\s*$/, "") + "]"),
             "dom": 'Blfrtip',
             "colReorder": true,
             "responsive": true,
