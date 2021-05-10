@@ -8,13 +8,18 @@ import ast
 
 app = Flask(__name__)
 app.config.from_object(Config())
+with open("parameters.json") as file:
+    data = json.load(file)
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{data["postgres_user"]}:{data["postgres_pw"]}@{data["postgres_url"]}/{data["postgres_db"]}'
 db = SQLAlchemy(app)
 
 app.register_blueprint(table.table_interface)
 app.jinja_env.globals.update(get_table_columns=table.get_table_columns)
+
+
 @app.route('/')
 def hello_world():
-    
+
     return render_template("index.html",)
 
 
@@ -28,9 +33,10 @@ def alltables():
     table_names = database.get_table_names()
     for i in table_names:
         alltables.append({
-            "table_name":str(i)
+            "table_name": str(i)
         })
     return render_template("db_view.html", alltables=alltables, table_columns=table.get_table_columns)
+
 
 @app.route('/filter', methods=["GET", "POST"])
 def page_filter():
@@ -40,12 +46,12 @@ def page_filter():
     return render_template("filter.html")
 
 
-@app.route('/view',methods=["GET", "POST"])
+@app.route('/view', methods=["GET", "POST"])
 def page_view():
     if request.method == "GET":
         return redirect(url_for("alltables"))
     if request.method == "POST":
-        #TODO Gefilterte Auswahl ausgeben statt alle Tabellen
+        # TODO Gefilterte Auswahl ausgeben statt alle Tabellen
         print(request.method)
         print(request.args)
     return redirect(url_for("alltables"))
@@ -54,6 +60,7 @@ def page_view():
 @app.route('/process')
 def page_process():
     return 'Page process'
+
 
 @app.route('/view/<table_name>')
 def view_table(table_name):
