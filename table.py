@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, render_template
 from db_actions import PostgersqlDBManagement
 import json
 
@@ -31,7 +31,6 @@ def get_table_columns(table_name):
 def get_table_rows(table_name):
     database = get_db_instance()
     return jsonify({"data": [dict(row) for row in database.get_table(table_name)]})
-
 
 @table_interface.route("/table/<table_name>", methods=["GET"])
 def get_table(table_name):

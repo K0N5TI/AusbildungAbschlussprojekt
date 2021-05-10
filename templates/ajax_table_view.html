@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% import 'table.html' as tables%}
+{% block content %}
+{{ tables.ajax_table(table_name=table_name, table_columns=table_columns)}}
+{% endblock %}

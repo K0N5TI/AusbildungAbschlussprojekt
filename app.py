@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from db_actions import PostgersqlDBManagement
-from table import table_interface
+import table
 import json
 import ast
 
@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config.from_object(Config())
 db = SQLAlchemy(app)
 
-app.register_blueprint(table_interface)
+app.register_blueprint(table.table_interface)
 
 @app.route('/')
 def hello_world():
@@ -56,6 +56,10 @@ def page_view():
 @app.route('/process')
 def page_process():
     return 'Page process'
+
+@app.route('/view/<table_name>')
+def view_table(table_name):
+    return render_template("ajax_table_view.html", table_name=table_name, table_columns=table.get_table_columns)
 
 
 if __name__ == '__main__':
