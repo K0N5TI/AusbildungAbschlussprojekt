@@ -30,7 +30,7 @@ def alltables():
         database = PostgersqlDBManagement(username=data["postgres_user"], password=data["postgres_pw"],
                                           url=data["postgres_url"], dbname=data["postgres_db"])
     alltables = []
-    table_names = database.get_table_names()
+    table_names = database.get_view_names()
     for i in table_names:
         alltables.append({
             "table_name": str(i)
@@ -41,7 +41,6 @@ def alltables():
 @app.route('/filter', methods=["GET", "POST"])
 def page_filter():
     if request.method == "POST":
-        
         return redirect(url_for("page_view"), code=307)
     return render_template("filter.html")
 
@@ -62,7 +61,7 @@ def page_view():
             elif req[key] == 'on':
                 req[key] = True
         alltables = []
-        table_names = database.get_table_names()
+        table_names = database.get_view_names()
         for table_name in table_names:
             alltables.append({
                 "table_name": str(table_name),
@@ -78,7 +77,7 @@ def page_process():
 
 @app.route('/view/<table_name>')
 def view_table(table_name):
-    return render_template("ajax_table_view.html", table_name=table_name, table_columns=table.get_table_columns)
+    return render_template("ajax_table_view.html", table_name=table_name)
 
 
 if __name__ == '__main__':
