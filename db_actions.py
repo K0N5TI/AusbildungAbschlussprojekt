@@ -16,12 +16,8 @@ class DBManagement:
     def get_table_column_values(self, table_name, column_name):
         return [r for r, in self.engine.execute(f"SELECT {column_name} from {table_name} GROUP BY {column_name}")]
 
-    def get_table(self, table_name):
+    def get_table(self, table_name, filter=None):
         return self.engine.execute(f"SELECT * FROM {table_name}")
-
-    def get_table(self, table_name, filter: dict):
-        print(filter)
-        pass
 
     def delete_array(self, table_name, column, condition):
         return self.engine.execute(f"DELETE FROM {table_name} WHERE {table_name}.{column} IN {str(tuple(condition))}")
