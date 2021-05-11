@@ -12,7 +12,8 @@ class DBManagement:
     def get_table(self, table_name):
         return self.engine.execute(f"SELECT * FROM {table_name}")
     
-    def get_table_with_filter(self, table_name, filter):
+    def get_table_with_filter(self, table_name, filter:dict):
+        print(filter)
         pass
 
     def delete_array(self, table_name, column, condition):

@@ -119,11 +119,16 @@
 </table>
 {% endmacro %}
 
-{% macro ajax_table(table_name="table_name")%}
+{% macro ajax_table(table_name="table_name", parameters = "parameters" ) %}
 <script>
+    var parameters = JSON.parse("{" + '{%for key in parameters %} "{{key}}":"{{parameters[key]}}", {% endfor%}'.replace(/,\s*$/, "") + "}");
+    console.log(parameters)
     $(document).ready(function () {
         var oTable = $("#{{table_name}}").DataTable({
-            "ajax": "{{url_for('table_interface.get_table_rows', table_name=table_name)}}",
+            "ajax": {
+                "url": "{{url_for('table_interface.get_table_rows', table_name=table_name)}}",
+                "data": JSON.parse("{" + '{%for key in parameters %} "{{key}}":"{{parameters[key]}}", {% endfor%}'.replace(/,\s*$/, "") + "}")
+            },
             "columns": JSON.parse("[" + '{% for column_name in get_table_columns(table_name).get_json()["columns"] %}{ "data": "{{column_name}}" },{% endfor %}'.replace(/,\s*$/, "") + "]"),
             "dom": 'Blfrtip',
             "colReorder": true,

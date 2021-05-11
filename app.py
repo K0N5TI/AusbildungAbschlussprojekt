@@ -35,14 +35,14 @@ def alltables():
         alltables.append({
             "table_name": str(i)
         })
-    return render_template("db_view.html", alltables=alltables, table_columns=table.get_table_columns)
+    return render_template("db_view.html", alltables=alltables)
 
 
 @app.route('/filter', methods=["GET", "POST"])
 def page_filter():
     if request.method == "POST":
-        req = request.form.to_dict()
-        return redirect(url_for("page_view", parapeters=req), code=307)
+        
+        return redirect(url_for("page_view"), code=307)
     return render_template("filter.html")
 
 
@@ -51,10 +51,24 @@ def page_view():
     if request.method == "GET":
         return redirect(url_for("alltables"))
     if request.method == "POST":
-        # TODO Gefilterte Auswahl ausgeben statt alle Tabellen
-        print(request.method)
-        print(request.args)
-    return redirect(url_for("alltables"))
+        with open("parameters.json") as file:
+            data = json.load(file)
+            database = PostgersqlDBManagement(username=data["postgres_user"], password=data["postgres_pw"],
+                                          url=data["postgres_url"], dbname=data["postgres_db"])
+        req = request.values.to_dict()
+        for key in [*req]:
+            if req[key] == 'Choose...' or req[key] == '':
+                del req[key]
+            elif req[key] == 'on':
+                req[key] = True
+        alltables = []
+        table_names = database.get_table_names()
+        for table_name in table_names:
+            alltables.append({
+                "table_name": str(table_name),
+                "parameters": req
+            })
+        return render_template("db_view.html", alltables=alltables)
 
 
 @app.route('/process')

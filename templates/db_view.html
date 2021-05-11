@@ -30,7 +30,7 @@
             {% elif single_table.table_name != alltables[0].table_name %}
             <div class="tab-pane fade" id="tab-{{ single_table.table_name }}">
                 {% endif %}
-                {{ tables.ajax_table(table_name=single_table.table_name)}}
+                {{ tables.ajax_table(table_name=single_table.table_name, parameters=single_table.parameters)}}
             </div>
             {% endfor %}
         </div>
