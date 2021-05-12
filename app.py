@@ -72,7 +72,7 @@ def page_view():
 
 @app.route('/process')
 def page_process():
-    return 'Page process'
+    return render_template("processing.html")
 
 
 @app.route('/view/<table_name>')

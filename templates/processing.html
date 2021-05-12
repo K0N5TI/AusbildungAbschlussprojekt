@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="color:blue;">
+    Process data
+</h1>
+<form action="{{url_for('page_process')}}" method="POST">
+    <table class="table table-borderless">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="export_pictures"
+                            style="width: 30px; height: 30px;">
+                    </div>
+                </td>
+                <td>
+                    <label class="col-form-label h3" for="export_pictures">Export pictures</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="float: right">
+        <input type="submit" class="btn btn-primary mb-2" value="confirm">
+    </div>
+</form>
+
+{% endblock %}

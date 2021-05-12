@@ -22,7 +22,6 @@ class DBManagement:
         if filter != {} :
             query_string = f"SELECT * FROM {table_name}"
             conditions = []
-            print(filter)
             if "batchid" in filter:
                 conditions.append(f"batch_inspectionid in (select batch_inspectionid from batchview where batchid = {filter['batchid']})")
             if "from_datetime" in filter:
