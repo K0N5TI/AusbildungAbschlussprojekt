@@ -70,8 +70,9 @@ def page_view():
         return render_template("db_view.html", alltables=alltables)
 
 
-@app.route('/process')
-def page_process():
+@app.route('/process', methods=["GET", "POST"])
+def page_process(parameters=None):
+    parameters= request.values.to_dict()
     return render_template("processing.html")
 
 

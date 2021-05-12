@@ -18,7 +18,8 @@ class DBManagement:
 
     def get_table(self, table_name, filter=None):
         filter = dict(filter)
-        del filter["_"]
+        if "_" in filter:
+            del filter["_"]
         if filter != {} :
             query_string = f"SELECT * FROM {table_name}"
             conditions = []

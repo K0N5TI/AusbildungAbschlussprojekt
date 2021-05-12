@@ -1,27 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
+<script>
+    $('a').each(function(){
+     this.href += window.location.search;
+})
+</script>
 <h1 style="color:blue;">
     Process data
 </h1>
-<form action="{{url_for('page_process')}}" method="POST">
-    <table class="table table-borderless">
-        <tbody>
-            <tr>
-                <td>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="export_pictures"
-                            style="width: 30px; height: 30px;">
-                    </div>
-                </td>
-                <td>
-                    <label class="col-form-label h3" for="export_pictures">Export pictures</label>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div style="float: right">
-        <input type="submit" class="btn btn-primary mb-2" value="confirm">
-    </div>
-</form>
+<table class="table table-borderless">
+    <thead>
+        <th scope="col">Action</th>
+        <th scope="col">Target</th>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Export to Folder</th>
+            <td>
+                <a type="a" class="btn btn-primary" role="a" href="#">CSV</a>
+                <a type="a" class="btn btn-primary" role="a" href="#">Pictures</a>
+                <a type="a" class="btn btn-primary" role="a" href="#">Excel</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Download</th>
+            <td>
+                <a type="a" class="btn btn-primary" role="a" href="#">CSV</a>
+                <a type="a" class="btn btn-primary" role="a" href="#">Pictures</a>
+                <a type="a" class="btn btn-primary" role="a" href="#">Excel</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Export</th>
+            <td>
+                <a type="a" class="btn btn-primary" role="a" href="#">CSV</a>
+                <a type="a" class="btn btn-primary" role="a" href="#">Pictures</a>
+                <a type="a" class="btn btn-primary" role="a" href="#">Excel</a>
+            </td>
+        </tr>
+
+
+    </tbody>
+</table>
+Export pictures to folder
+                Export pictures as download
+                Export data as CSV File
+                Export data as Excel
+                Dalete data
 
 {% endblock %}

@@ -6,6 +6,7 @@
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
         });
+        console.log(window.location.search);
     });
 </script>
 <div>
@@ -34,6 +35,9 @@
             </div>
             {% endfor %}
         </div>
+    </div>
+    <div style="float: right">
+        <a class="btn btn-primary" href="{{url_for('page_process', parameters=alltables[0].parameters)}}" role="button">Link</a>
     </div>
 </div>
 {% endblock %}
