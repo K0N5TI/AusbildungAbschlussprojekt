@@ -17,7 +17,24 @@ class DBManagement:
         return [r for r, in self.engine.execute(f"SELECT {column_name} from {table_name} GROUP BY {column_name}")]
 
     def get_table(self, table_name, filter=None):
-        return self.engine.execute(f"SELECT * FROM {table_name}")
+        filter = dict(filter)
+        del filter["_"]
+        if filter != {} :
+            query_string = f"SELECT * FROM {table_name}"
+            conditions = []
+            print(filter)
+            if "batchid" in filter:
+                conditions.append(f"batch_inspectionid in (select batch_inspectionid from batchview where batchid = {filter['batchid']})")
+            if "from_datetime" in filter:
+                conditions.append(f"timestamp > '{filter['from_datetime'].replace('T', ' ')}'")
+            if "to_datetime" in filter:
+                conditions.append(f"timestamp < '{filter['to_datetime'].replace('T', ' ')}'")
+            if len(conditions) > 0:
+                query_string += " Where "
+                query_string += " AND ".join(conditions)
+            return self.engine.execute(query_string)
+        if filter == {}:
+            return self.engine.execute(f"SELECT * FROM {table_name}")
 
     def delete_array(self, table_name, column, condition):
         return self.engine.execute(f"DELETE FROM {table_name} WHERE {table_name}.{column} IN {str(tuple(condition))}")
