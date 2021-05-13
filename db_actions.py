@@ -4,6 +4,27 @@ from sqlalchemy.ext.automap import automap_base
 
 
 class DBManagement:
+    def __condition_filter_to_string(self, filter):
+        if "_" in filter:
+            del filter["_"]
+        if filter != {}:
+            query_string = f""
+            conditions = []
+            if "batchid" in filter:
+                conditions.append(
+                    f"batch_inspectionid in (select batch_inspectionid from batchview where batchid = {filter['batchid']})")
+            if "from_datetime" in filter:
+                conditions.append(
+                    f"timestamp > '{filter['from_datetime'].replace('T', ' ')}'")
+            if "to_datetime" in filter:
+                conditions.append(
+                    f"timestamp < '{filter['to_datetime'].replace('T', ' ')}'")
+            if len(conditions) > 0:
+                query_string += " Where "
+                query_string += " AND ".join(conditions)
+            return query_string
+        return ""
+
     def get_table_names(self):
         return self.metadata.tables.keys()
 
@@ -20,39 +41,19 @@ class DBManagement:
         filter = dict(filter)
         if "_" in filter:
             del filter["_"]
-        if filter != {} :
-            query_string = f"SELECT * FROM {table_name}"
-            conditions = []
-            if "batchid" in filter:
-                conditions.append(f"batch_inspectionid in (select batch_inspectionid from batchview where batchid = {filter['batchid']})")
-            if "from_datetime" in filter:
-                conditions.append(f"timestamp > '{filter['from_datetime'].replace('T', ' ')}'")
-            if "to_datetime" in filter:
-                conditions.append(f"timestamp < '{filter['to_datetime'].replace('T', ' ')}'")
-            if len(conditions) > 0:
-                query_string += " Where "
-                query_string += " AND ".join(conditions)
+        if filter != {}:
+            query_string = f"SELECT * FROM {table_name} " + self.__condition_filter_to_string(filter)
             return self.engine.execute(query_string)
         if filter == {}:
             return self.engine.execute(f"SELECT * FROM {table_name}")
 
-    def delete_array(self, table_name, column, condition):
-        return self.engine.execute(f"DELETE FROM {table_name} WHERE {table_name}.{column} IN {str(tuple(condition))}")
-
-    def delete_single_value(self, table_name, column, condition):
-        return self.engine.execute(
-            f"DELETE FROM {table_name} WHERE {table_name}.{column}='{condition[0]}'")
-
-    def delete_since_time(self, table_name, timestamp):
-        print(f"DELETE FROM {table_name} WHERE timestamp >= '{timestamp}'")
-        return self.engine.execute(
-            f"DELETE FROM {table_name} WHERE {table_name}.timestamp>'{timestamp}'")
-
-    def delete(self, tablename, column, condition):
-        if condition is tuple or list:
-            if len(condition) > 1:
-                return self.delete_array(tablename, column, condition)
-        return self.delete_single_value(tablename, column, condition)
+    def delete_from_table(self, table_name, filter):
+        filter = dict(filter)
+        if "_" in filter:
+            del filter["_"]
+        if filter != {}:
+            query_string = f"DELETE FROM {table_name} " + self.__condition_filter_to_string(filter)
+            return self.engine.execute(query_string)
 
 
 class PostgersqlDBManagement(DBManagement):

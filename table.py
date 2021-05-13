@@ -31,10 +31,15 @@ def get_column_content(table_name, column_name):
     return jsonify(database.get_table_column_values(table_name, column_name))
 
 
-@table_interface.route("/rows/<table_name>", methods=["GET"])
+@table_interface.route("/rows/<table_name>", methods=["GET", "DELETE"])
 def get_table_rows(table_name):
-    database = get_db_instance()
-    return jsonify({"data": [dict(row) for row in database.get_table(table_name, filter=request.values.to_dict())]})
+    if request.method == "GET":
+        database = get_db_instance()
+        return jsonify({"data": [dict(row) for row in database.get_table(table_name, filter=request.values.to_dict())]})
+    if request.method == "DELETE":
+        database = get_db_instance()
+        response = database.delete_from_table(table_name, filter=request.values.to_dict())
+        return jsonify(response)
 
 @table_interface.route("/table/<table_name>", methods=["GET"])
 def get_table(table_name):
