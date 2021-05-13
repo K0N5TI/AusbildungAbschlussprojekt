@@ -45,29 +45,26 @@ def page_filter():
     return render_template("filter.html")
 
 
-@app.route('/view', methods=["GET", "POST"])
+@app.route('/view', methods=["GET"])
 def page_view():
-    if request.method == "GET":
-        return redirect(url_for("alltables"))
-    if request.method == "POST":
-        with open("parameters.json") as file:
-            data = json.load(file)
-            database = PostgersqlDBManagement(username=data["postgres_user"], password=data["postgres_pw"],
-                                          url=data["postgres_url"], dbname=data["postgres_db"])
-        req = request.values.to_dict()
-        for key in [*req]:
-            if req[key] == 'Choose...' or req[key] == '':
-                del req[key]
-            elif req[key] == 'on':
-                req[key] = True
-        alltables = []
-        table_names = database.get_view_names()
-        for table_name in table_names:
-            alltables.append({
-                "table_name": str(table_name),
-                "parameters": req
-            })
-        return render_template("db_view.html", alltables=alltables)
+    with open("parameters.json") as file:
+        data = json.load(file)
+        database = PostgersqlDBManagement(username=data["postgres_user"], password=data["postgres_pw"],
+                                        url=data["postgres_url"], dbname=data["postgres_db"])
+    req = request.values.to_dict()
+    for key in [*req]:
+        if req[key] == 'Choose...' or req[key] == '':
+            del req[key]
+        elif req[key] == 'on':
+            req[key] = True
+    alltables = []
+    table_names = database.get_view_names()
+    for table_name in table_names:
+        alltables.append({
+            "table_name": str(table_name),
+            "parameters": req
+        })
+    return render_template("db_view.html", alltables=alltables)
 
 
 @app.route('/process', methods=["GET", "POST"])

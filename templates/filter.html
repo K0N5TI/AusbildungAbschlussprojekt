@@ -4,22 +4,26 @@
     $(document).ready(function () {
         $.ajax({
             url: "{{url_for('table_interface.get_column_content', table_name='batchview', column_name='batchid')}}", success: function (result) {
-                
+
                 for (i = 0; i < result.length; i++) {
                     var batchid_select = document.getElementById("batchid");
                     var option = document.createElement("option");
-                    option.text= result[i];
+                    option.text = result[i];
                     batchid_select.add(option);
                 }
             }
         });
     });
 
+    function toView() {
+        var str = $( "form" ).serialize();
+        location.href = "{{url_for('page_view')}}?".concat(str);
+    }
 </script>
 <h1 style="color:blue;">
     Select data
 </h1>
-<form action="{{url_for('page_filter')}}" method="POST">
+<form>
     <div class="form-group row">
         <label for="batchid" class="col-sm-2 col-form-label h3">Batch Number</label>
         <div class="col-sm-10">
@@ -61,12 +65,10 @@
             </div>
         </div>
     </div>
-
-    <div style="float: right">
-        <input class="btn btn-secondary mb-2" value="Load template">
-        <input class="btn btn-secondary mb-2" value="Save as template">
-        <input type="reset" class="btn btn-secondary mb-2" value="Reset">
-        <input type="submit" class="btn btn-primary mb-2" value="Select data">
-    </div>
 </form>
+<div style="float: right">
+    <input type="reset" class="btn btn-secondary mb-2" value="Reset">
+    <button onclick="toView()" class="btn btn-primary mb-2">Select Data</button>
+</div>
+
 {% endblock %}
