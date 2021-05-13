@@ -11,14 +11,17 @@ class DBManagement:
             query_string = f""
             conditions = []
             if "batchid" in filter:
-                conditions.append(
-                    f"batch_inspectionid in (select batch_inspectionid from batchview where batchid = {filter['batchid']})")
+                if filter["batchid"] != "":
+                    conditions.append(
+                        f"batch_inspectionid in (select batch_inspectionid from batchview where batchid = {filter['batchid']})")
             if "from_datetime" in filter:
-                conditions.append(
-                    f"timestamp > '{filter['from_datetime'].replace('T', ' ')}'")
+                if filter["from_datetime"] != "":
+                    conditions.append(
+                        f"timestamp > '{filter['from_datetime'].replace('T', ' ')}'")
             if "to_datetime" in filter:
-                conditions.append(
-                    f"timestamp < '{filter['to_datetime'].replace('T', ' ')}'")
+                if filter["to_datetime"] != "":
+                    conditions.append(
+                        f"timestamp < '{filter['to_datetime'].replace('T', ' ')}'")
             if len(conditions) > 0:
                 query_string += " Where "
                 query_string += " AND ".join(conditions)
@@ -29,7 +32,8 @@ class DBManagement:
         return self.metadata.tables.keys()
 
     def get_view_names(self):
-        return [r for r, in self.engine.execute("select viewname from pg_catalog.pg_views where schemaname NOT IN ('pg_catalog', 'information_schema')order by schemaname, viewname;")]
+        return [r for r, in self.engine.execute(
+            "select viewname from pg_catalog.pg_views where schemaname NOT IN ('pg_catalog', 'information_schema')order by schemaname, viewname;")]
 
     def get_table_columns(self, table_name):
         return self.engine.execute(f"SELECT * FROM {table_name} LIMIT 0").keys()

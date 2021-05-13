@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <script>
-    $('a').each(function(){
-     this.href += window.location.search;
-})
+    $(document).ready(function () {
+        $('a').each(function () {
+            this.href += window.location.search;
+        })
+    });
+
 </script>
 <h1 style="color:blue;">
     Process data
@@ -17,29 +20,19 @@
         <tr>
             <th scope="row">Export to Folder</th>
             <td>
-                <a type="a" class="btn btn-primary" role="a" href="#">CSV</a>
-                <a type="a" class="btn btn-primary" role="a" href="#">Pictures</a>
-                <a type="a" class="btn btn-primary" role="a" href="#">Excel</a>
+                <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_csv')}}">CSV</a>
+                <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_pictures')}}">Pictures</a>
+                <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_excel')}}">Excel</a>
             </td>
         </tr>
         <tr>
             <th scope="row">Download</th>
             <td>
-                <a type="a" class="btn btn-primary" role="a" href="#">CSV</a>
-                <a type="a" class="btn btn-primary" role="a" href="#">Pictures</a>
-                <a type="a" class="btn btn-primary" role="a" href="#">Excel</a>
+                <a class="btn btn-primary" href="{{url_for('export_interface.download_csv')}}">CSV</a>
+                <a class="btn btn-primary" href="{{url_for('export_interface.download_pictures')}}">Pictures</a>
+                <a class="btn btn-primary" href="{{url_for('export_interface.download_excel')}}">Excel</a>
             </td>
         </tr>
-        <tr>
-            <th scope="row">Export</th>
-            <td>
-                <a type="a" class="btn btn-primary" role="a" href="#">CSV</a>
-                <a type="a" class="btn btn-primary" role="a" href="#">Pictures</a>
-                <a type="a" class="btn btn-primary" role="a" href="#">Excel</a>
-            </td>
-        </tr>
-
-
     </tbody>
 </table>
 {% endblock %}

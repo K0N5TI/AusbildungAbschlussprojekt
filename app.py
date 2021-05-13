@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from db_actions import PostgersqlDBManagement
 import table
+import export
 import json
 import ast
 
@@ -14,6 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://{data["postgres_
 db = SQLAlchemy(app)
 
 app.register_blueprint(table.table_interface)
+app.register_blueprint(export.export_interface)
 app.jinja_env.globals.update(get_table_columns=table.get_table_columns)
 
 
