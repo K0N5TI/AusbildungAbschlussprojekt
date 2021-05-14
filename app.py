@@ -33,6 +33,7 @@ def alltables():
                                           url=data["postgres_url"], dbname=data["postgres_db"])
     alltables = []
     table_names = database.get_view_names()
+    table_names.extend(database.get_table_names())
     for i in table_names:
         alltables.append({
             "table_name": str(i)
