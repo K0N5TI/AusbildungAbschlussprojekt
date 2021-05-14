@@ -1,5 +1,26 @@
 <html>
+<style>
+.koerber_logo {
+    height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
 
+.container {
+    position: relative;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+</style>
 <head>
     {% if title %}
     <title>{{ title }} - DB-Tools</title>
@@ -10,38 +31,17 @@
 </head>
 
 <body>
-    <div>
-        <style>
-            .koerber_logo {
-                height: 80%;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                width: 80%;
-            }
+<div>
 
-            .container {
-                position: relative;
-            }
-
-            .center {
-                margin: 0;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                -ms-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
-            }
-        </style>
-        <img alt="Körber Logo" class="koerber_logo"
-            src="{{ url_for('static',filename='Resources/Koerber_Logo_RGB_Black.svg')}}" style="">
+    <img alt="Körber Logo" class="koerber_logo"
+         src="{{ url_for('static',filename='Resources/Koerber_Logo_RGB_Black.svg')}}" style="">
+</div>
+<div class="container" style="height: 20%;">
+    <div class="center">
+        <a type="button" href="{{url_for('page_filter')}}" class="btn btn-primary">Filter Page</a>
+        <a type="button" href="{{url_for('alltables')}}" class="btn btn-outline-primary">All Tables</a>
     </div>
-    <div class="container">
-        <div class="center">
-            <a type="button" href="{{url_for('page_filter')}}" class="btn btn-primary">Filter Page</a>
-            <a type="button" href="{{url_for('page_view')}}" class="btn btn-outline-primary">All Tables</a>
-        </div>
-    </div>
+</div>
 </body>
 
 </html>
