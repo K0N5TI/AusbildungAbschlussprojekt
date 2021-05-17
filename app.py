@@ -29,6 +29,7 @@ def hello_world():
 
 @app.route('/alltables')
 def alltables():
+    
     with open("parameters.json") as file:
         data = json.load(file)
         database = PostgersqlDBManagement(username=data["postgres_user"], password=data["postgres_pw"],

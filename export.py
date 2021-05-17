@@ -98,4 +98,13 @@ def download_excel():
 
 @export_interface.route("/download/pictures")
 def download_pictures():
+    database = get_db_instance()
+    memory_file = BytesIO()
+    pathes_to_pictures = database.get_table_column_values("trigger_image_links", "image1")
+    if len(pathes_to_pictures) > 0:
+        with zipfile.ZipFile(memory_file, 'w') as zf:
+            for picture in pathes_to_pictures:
+                zf.write(picture, basename(picture))
+        memory_file.seek(0)
+        return send_file(memory_file, attachment_filename="pictures_testing.zip", as_attachment=True)
     return ""
