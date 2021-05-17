@@ -6,6 +6,14 @@
             this.href += window.location.search;
         })
     });
+    function get_csv_folder() {
+        
+        $.get("{{url_for('export_interface.export_folder_csv')}}", function (data) {
+            
+            document.getElementById("export_folder").innerHTML = data["export_folder"];
+        }
+        )
+    };
 
 </script>
 <h1 style="color:blue;">
@@ -20,9 +28,10 @@
         <tr>
             <th scope="row">Export to Folder</th>
             <td>
-                <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_csv')}}">CSV</a>
+                <button class="btn btn-primary" onclick="get_csv_folder()">CSV</button>
                 <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_pictures')}}">Pictures</a>
                 <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_excel')}}">Excel</a>
+                <input id="export_folder">
             </td>
         </tr>
         <tr>
