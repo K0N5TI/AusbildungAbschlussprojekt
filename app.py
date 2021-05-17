@@ -4,6 +4,7 @@ from config import Config
 from db_actions import PostgersqlDBManagement
 import table
 import export
+import db_config
 import json
 import ast
 
@@ -16,6 +17,7 @@ db = SQLAlchemy(app)
 
 app.register_blueprint(table.table_interface)
 app.register_blueprint(export.export_interface)
+app.register_blueprint(db_config.config_interface)
 app.jinja_env.globals.update(get_table_columns=table.get_table_columns)
 
 
@@ -53,7 +55,7 @@ def page_view():
     with open("parameters.json") as file:
         data = json.load(file)
         database = PostgersqlDBManagement(username=data["postgres_user"], password=data["postgres_pw"],
-                                        url=data["postgres_url"], dbname=data["postgres_db"])
+                                          url=data["postgres_url"], dbname=data["postgres_db"])
     req = request.values.to_dict()
     for key in [*req]:
         if req[key] == 'Choose...' or req[key] == '':
@@ -71,14 +73,18 @@ def page_view():
 
 
 @app.route('/process', methods=["GET", "POST"])
-def page_process(parameters=None):
-    parameters= request.values.to_dict()
+def page_process():
     return render_template("processing.html")
 
 
 @app.route('/view/<table_name>')
 def view_table(table_name):
     return render_template("ajax_table_view.html", table_name=table_name)
+
+
+@app.route('/config')
+def page_config():
+    return render_template("config.html")
 
 
 if __name__ == '__main__':

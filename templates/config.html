@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+    $(document).ready(function () {
+        updateForm();
+    });
+    function updateForm() {
+        $.ajax({
+            url: "{{url_for('config_interface.get_config')}}", success: function (result) {
+                params = Object.keys(result)
+                for (i = 0; i < params.length; i++) {
+                    document.getElementById(params[i]).setAttribute("placeholder", result[params[i]])
+                }
+            }
+        });
+        document.getElementById("configForm").reset();
+    }
+    function sendForm() {
+        var data = new FormData();
+        data.append("postgres_url", document.getElementById("postgres_url").value);
+        data.append("postgres_user", document.getElementById("postgres_user").value);
+        data.append("postgres_pw", document.getElementById("postgres_pw").value);
+        data.append("postgres_db", document.getElementById("postgres_db").value);
+        data.append("limit_table_length", document.getElementById("limit_table_length").value);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "{{url_for('config_interface.post_config')}}");
+        xhr.send(data);
+        updateForm();
+    }
+    function resetConfig() {
+        $.post("{{url_for('config_interface.reset_config')}}", function(){
+            updateForm();
+        });
+    }
+
+</script>
+<h1 style="color:blue;">
+    Configure database connection
+</h1>
+
+<form id="configForm">
+    <div class="form-group row">
+        <label for="postgres_url" class="col-sm-2 col-form-label h3">Database URL</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="postgres_url" name="postgres_url" placeholder="postgres_url">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="postgres_user" class="col-sm-2 col-form-label h3">Database user</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="postgres_user" name="postgres_user" placeholder="postgres_user">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="postgres_pw" class="col-sm-2 col-form-label h3">Database password</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" id="postgres_pw" name="postgres_pw" placeholder="password">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="postgres_db" class="col-sm-2 col-form-label h3">Database name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="postgres_db" name="postgres_pw" placeholder="postgres_db">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="limit_table_length" class="col-sm-2 col-form-label h3">Table length limit</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="limit_table_length" name="limit_table_length"
+                placeholder="limit_table_length">
+        </div>
+    </div>
+</form>
+<div style="float: right">
+    <button onclick="sendForm()" class="btn btn-primary">Submit</button>
+    <button onclick="resetConfig()" class="btn btn-primary">Reset</button>
+
+</div>
+
+{% endblock %}

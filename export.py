@@ -85,7 +85,7 @@ def download_excel():
     database = get_db_instance()
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    for table_name in database.get_table_names():
+    for table_name in database.get_view_names():
         data_list = [dict(row) for row in database.get_table(table_name, filter=request.values.to_dict())]
         if len(data_list) > 0:
             df = pd.DataFrame(data_list)
