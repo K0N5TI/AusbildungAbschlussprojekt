@@ -7,12 +7,25 @@
         })
     });
     function get_csv_folder() {
-        
         $.get("{{url_for('export_interface.export_folder_csv')}}", function (data) {
-            
-            document.getElementById("export_folder").innerHTML = data["export_folder"];
-        }
-        )
+            var folder_link = data["export_folder"];
+            document.getElementById("csv_folder").innerHTML = folder_link;
+            document.getElementById("csv_alert").removeAttribute("hidden");
+        });
+    };
+    function get_pictures_folder() {
+        $.get("{{url_for('export_interface.export_folder_pictures')}}", function (data) {
+            var folder_link = data["export_folder"];
+            document.getElementById("pictures_folder").innerHTML = folder_link;
+            document.getElementById("pictures_alert").removeAttribute("hidden");
+        });
+    };
+    function get_excel_folder() {
+        $.get("{{url_for('export_interface.export_folder_excel')}}", function (data) {
+            var folder_link = data["export_folder"];
+            document.getElementById("excel_folder").innerHTML = folder_link;
+            document.getElementById("excel_alert").removeAttribute("hidden");
+        });
     };
 
 </script>
@@ -28,10 +41,9 @@
         <tr>
             <th scope="row">Export to Folder</th>
             <td>
-                <button class="btn btn-primary" onclick="get_csv_folder()">CSV</button>
-                <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_pictures')}}">Pictures</a>
-                <a class="btn btn-primary" href="{{url_for('export_interface.export_folder_excel')}}">Excel</a>
-                <input id="export_folder">
+                <button id="csv_button"class="btn btn-primary" onclick="get_csv_folder()">CSV</button>
+                <button id="pictures_button"class="btn btn-primary" onclick="get_pictures_folder()">Pictures</button>
+                <button id="excel_button"class="btn btn-primary" onclick="get_excel_folder()">Excel</button>
             </td>
         </tr>
         <tr>
@@ -44,4 +56,17 @@
         </tr>
     </tbody>
 </table>
+<div id="csv_alert" class="alert alert-primary" role="alert" hidden>
+    Your CSV-Data is ready: <br>
+    <div id=csv_folder></div>
+</div>
+<div id="pictures_alert" class="alert alert-primary" role="alert" hidden>
+    Your pictures are ready: <br>
+    <div id=pictures_folder></div>
+</div>
+<div id="excel_alert" class="alert alert-primary" role="alert" hidden>
+    Your excel-file is ready: <br>
+    <div id=excel_folder></div>
+</div>
+
 {% endblock %}
