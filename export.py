@@ -12,7 +12,6 @@ from pathlib import Path
 from os.path import basename
 import shutil
 import time
-import webbrowser
 
 export_interface = Blueprint(
     'export_interface', __name__, url_prefix="/export_interface")
